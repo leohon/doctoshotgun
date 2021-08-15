@@ -573,6 +573,27 @@ class DoctolibDE(Doctolib):
     centers = URL(r'/impfung-covid-19-corona/(?P<where>\w+)', CentersPage)
     center = URL(r'/praxis/.*', CenterPage)
 
+    def _setup_session(self, profile):
+        pass
+
+    def do_login(self, code):
+        pass
+
+    def find_centers(self, where, motives=None, page=1):
+        pass
+    
+    def get_patients(self):
+        pass
+    
+    def normalize(clse, string):
+        pass
+
+    def try_to_book(self, center, vaccine_list, start_date, end_date, only_second, only_third, dry_run=False):
+        pass
+
+    def try_to_book_place(self, profile_id, motive_id, practice_id, agenda_ids, vac_name, start_date, end_date, only_second, only_third, dry_run=False):
+        pass
+
 
 class DoctolibFR(Doctolib):
     BASEURL = 'https://www.doctolib.fr'
@@ -599,6 +620,27 @@ class DoctolibFR(Doctolib):
 
     centers = URL(r'/vaccination-covid-19/(?P<where>\w+)', CentersPage)
     center = URL(r'/centre-de-sante/.*', CenterPage)
+
+    def _setup_session(self, profile):
+        pass
+
+    def do_login(self, code):
+        pass
+
+    def find_centers(self, where, motives=None, page=1):
+        pass
+    
+    def get_patients(self):
+        pass
+    
+    def normalize(clse, string):
+        pass
+
+    def try_to_book(self, center, vaccine_list, start_date, end_date, only_second, only_third, dry_run=False):
+        pass
+
+    def try_to_book_place(self, profile_id, motive_id, practice_id, agenda_ids, vac_name, start_date, end_date, only_second, only_third, dry_run=False):
+        pass
 
 
 class Application:
