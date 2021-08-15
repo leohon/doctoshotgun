@@ -600,6 +600,21 @@ class DoctolibFR(Doctolib):
     centers = URL(r'/vaccination-covid-19/(?P<where>\w+)', CentersPage)
     center = URL(r'/centre-de-sante/.*', CenterPage)
 
+class Home:
+    def AvailableSlots:
+        pass
+
+class Country:
+    def AvailableSlots:
+        return try_to_book(center, vaccine_list, start_date, end_date, args.only_second, args.only_third, args.dry_run)
+        
+class CountryAdapter(Home):
+	def _init_(self, profile):
+        super()._init_(profile)
+
+	def AvailableSlots: 
+        return try_to_book(center, vaccine_list, start_date, end_date, args.only_second, args.only_third, args.dry_run)
+
 
 class Application:
     @classmethod
@@ -830,11 +845,19 @@ class Application:
 
                     log('Center %(name_with_title)s (%(city)s):' % center)
 
-                    if docto.try_to_book(center, vaccine_list, start_date, end_date, args.only_second, args.only_third, args.dry_run):
-                        log('')
-                        log('💉 %s Congratulations.' %
+                    if args.country == "fr":
+                        if adapter.AvailableSlots():
+                            log('')
+                            log('💉 %s Congratulations.' %
                             colored('Booked!', 'green', attrs=('bold',)))
-                        return 0
+                            return 0
+
+                    if args.country == "de":
+                        if adapter.AvailableSlots():
+                            log('')
+                            log('💉 %s Congratulations.' %
+                            colored('Booked!', 'green', attrs=('bold',)))
+                            return 0
 
                     sleep(SLEEP_INTERVAL_AFTER_CENTER)
 
