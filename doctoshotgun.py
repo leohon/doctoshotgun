@@ -600,6 +600,27 @@ class DoctolibFR(Doctolib):
     centers = URL(r'/vaccination-covid-19/(?P<where>\w+)', CentersPage)
     center = URL(r'/centre-de-sante/.*', CenterPage)
 
+class CenterAggregate(Iterable):
+    def __init__(self):
+        self._data = None
+
+    def __iter__(self):
+        return CenterIterator(self)
+
+class CenterIterator(Iterable)
+    def __init__(self, center_aggregate):
+        self._center_aggregate = center_aggregate
+
+	def next(center):
+		if center['name_with_title'] not in args.center or center['name_with_title'] not in args.center_regex:
+            logging.debug("Skipping center '%s'" %
+                    center['name_with_title'])
+            continue
+		if center['name_with_title'] in args.center_exclude or center['name_with_title']in args.center_exclude_regex:
+            logging.debug(
+                "Skipping center '%(name_with_title)s' because it's excluded" % center)
+            continue
+
 
 class Application:
     @classmethod
@@ -790,37 +811,11 @@ class Application:
 
         while True:
             log_ts()
+            center_aggregate = CenterAggregate()
             try:
                 for center in docto.find_centers(cities, motives):
-                    if args.center:
-                        if center['name_with_title'] not in args.center:
-                            logging.debug("Skipping center '%s'" %
-                                          center['name_with_title'])
-                            continue
-                    if args.center_regex:
-                        center_matched = False
-                        for center_regex in args.center_regex:
-                            if re.match(center_regex, center['name_with_title']):
-                                center_matched = True
-                            else:
-                                logging.debug(
-                                    "Skipping center '%(name_with_title)s'" % center)
-                        if not center_matched:
-                            continue
-                    if args.center_exclude:
-                        if center['name_with_title'] in args.center_exclude:
-                            logging.debug(
-                                "Skipping center '%(name_with_title)s' because it's excluded" % center)
-                            continue
-                    if args.center_exclude_regex:
-                        center_excluded = False
-                        for center_exclude_regex in args.center_exclude_regex:
-                            if re.match(center_exclude_regex, center['name_with_title']):
-                                logging.debug(
-                                    "Skipping center '%(name_with_title)s' because it's excluded" % center)
-                                center_excluded = True
-                        if center_excluded:
-                            continue
+                    center_aggregate.next(center)
+
                     if not args.include_neighbor_city and not docto.normalize(center['city']).startswith(tuple(cities)):
                         logging.debug(
                             "Skipping city '%(city)s' %(name_with_title)s" % center)
