@@ -600,6 +600,40 @@ class DoctolibFR(Doctolib):
     centers = URL(r'/vaccination-covid-19/(?P<where>\w+)', CentersPage)
     center = URL(r'/centre-de-sante/.*', CenterPage)
 
+class DoseState():
+	d_num = ""
+	def pfizer(d_num):
+		if d_num == "1"
+			motives.append(docto.KEY_PFIZER)
+		elif d_num == "2"
+			motives.append(docto.KEY_PFIZER_SECOND)
+		else
+			motives.append(docto.KEY_PFIZER_THIRD)
+	def moderna(d_num):
+		if d_num == "1"
+			motives.append(docto.KEY_MODERNA)
+		elif d_num == "2"
+			motives.append(docto.KEY_MODERNA_SECOND)
+		else
+			motives.append(docto.KEY_MODERNA_THIRD)
+	def janssen(d_num):
+		if d_num == "1"
+			motives.append(docto.KEY_JANSSEN)
+	def astrazeneca(d_num):
+		if d_num == "1"
+			motives.append(docto.KEY_ASTRAZENECA)
+		elif d_num == "2"
+			motives.append(docto.KEY_ASTRAZENECA_SECOND)
+
+class DoseStateOne(DoseState):
+	dnum = '1'
+
+class DoseStateTwo(DoseState):
+	dnum = '2'
+
+class DoseStateThree(DoseState):
+	dnum = '3'
+
 
 class Application:
     @classmethod
